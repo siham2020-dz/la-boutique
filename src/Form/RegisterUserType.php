@@ -27,7 +27,7 @@ class RegisterUserType extends AbstractType
             
             ->add('plainPassword',RepeatedType::class,[
                 'type'=>PasswordType::class,
-                'contraints'=>[new Length(
+                'constraints'=>[new Length(
                     [
                    'min'=> 4,
                     'max'=> 30
@@ -43,7 +43,7 @@ class RegisterUserType extends AbstractType
             ]
             )
             ->add('firstname',TextType::class,['label'=>"Votre prénom",
-           'contraints'=>[new Length(
+           'constraints'=>[new Length(
                     [
                    'min'=> 4,
                     'max'=> 30
@@ -53,7 +53,7 @@ class RegisterUserType extends AbstractType
             'attr'=>['placeholder'=>"Indiquez votre prénom"]
             ])
             ->add('lastname',TextType::class,['label'=>"Votre nom",
-            'contraints'=>[new Length(
+            'constraints'=>[new Length(
                     [
                    'min'=> 4,
                     'max'=> 30
@@ -73,10 +73,10 @@ class RegisterUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'contraints'=>[new UniqueEntity(
+            'constraints'=>[new UniqueEntity(
                     [
                         'entityClass'=> User::class,
-                        'fields'=> 'emal'
+                        'fields'=> 'email'
                    
                     ]
             
