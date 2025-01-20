@@ -22,6 +22,7 @@ class AccountController extends AbstractController
     public function password(Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
 
     {
+        
         $user=$this->getUser();
         $form = $this ->createForm(PasswordUserType::class,$user,
         [
@@ -30,6 +31,10 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            $this->addFlash
+            ('success',
+               "votre mot de passe est correctement mis a jour  "
+            );
             // metre a jour ma base de donnees 
             $entityManager->flush();
          //dd($form->getData());

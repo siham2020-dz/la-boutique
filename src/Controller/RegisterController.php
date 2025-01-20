@@ -17,6 +17,7 @@ class RegisterController extends AbstractController
     {
            //dd($request);
            $user = new User();
+       
            $form =$this->createForm(RegisterUserType::class,$user);
            //si le formulaire esy soumis alors:
            // tu enregistre les datas en bcaddtu envoies un message de confirmation du compte bien créé
@@ -26,7 +27,11 @@ class RegisterController extends AbstractController
             
              $entityManager->persist($user);
              $entityManager->flush();
-
+             $this->addFlash
+              ('success',
+                "votre compte est correctement  créé,veuiller vous connecter. "
+              );
+              return $this->redirectToRoute('app_login');
            }
            //enregister dan la base de donnees
         return $this->render('register/index.html.twig',[
