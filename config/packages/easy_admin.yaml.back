@@ -1,0 +1,9 @@
+# config/packages/easy_admin.yaml
+easy_admin:
+    site_name: 'Administration'
+    design:
+        brand_color: '#007BFF' # Couleur principale du tableau de bord
+    assets:
+        css:
+            - 'bundles/easyadmin/css/admin.css' # Personnalisation CSS si nécessaire
+    

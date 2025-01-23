@@ -21,6 +21,8 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Utilisateur')
             ->setEntityLabelInPlural('Utilisateurs')
+            ->setPaginatorPageSize(5)
+            
            
         ;
     }
@@ -31,6 +33,7 @@ class UserCrudController extends AbstractCrudController
           TextField::new('firstname')->setLabel('Prenom'),
           TextField::new('lastname')->setLabel('Nom'),
           TextField::new('Email')->setLabel('Email')->onlyOnIndex(),
+        
         ];
     }
   

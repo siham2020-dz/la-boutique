@@ -54,7 +54,7 @@ class PasswordUserType extends AbstractType
             $passwordHasher= $form->getConfig()->getOptions()['passwordHasher'];
 
             //Récupére le mot de passe saisi par l'utilisateur  et le comparer au mdp en base de donnée(dans l'entité)
-            $actualPwd = $form-> get('actualPassword')-> getData();
+           
             $isValid=$passwordHasher->isPasswordValid(
                 $user,
                 $form->get('actualPassword')->getData()
