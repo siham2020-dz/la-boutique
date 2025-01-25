@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container my-5">
+    {% if cart %}
+        <h1>Mon Panier</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Liste de mes produits</h2>
+                {% for product in cart %}
+                    <div class="row mt-2" id="product-{{ product.object.id }}" data-id="{{ product.object.id }}">
+                        <div class="col-md-2">
+                            <img src="/uploads/{{ product.object.illustration }}" class="img-fluid" alt="{{ product.object.name }}">
+                        </div>
+                        <div class="col-md-4">
+                            <strong>{{ product.object.name }}</strong>
+                            <p>Prix unitaire : {{ product.object.pricewt|number_format(2, ',', ' ') }} €</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-outline-danger btn-sm decrease-quantity" data-id="{{ product.object.id }}">-</button>
+                                <span id="qty-{{ product.object.id }}" class="mx-2">{{ product.qty }}</span>
+                                <button class="btn btn-outline-success btn-sm increase-quantity" data-id="{{ product.object.id }}">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>{{ (product.qty * product.object.pricewt)|number_format(2, ',', ' ') }} €</strong>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+    <h3>Récapitulatif</h3>
+    {% set total = 0 %}
+    {%set fullCartQuantity =0 %} 
+    {% for product in cart %}
+        {% set total = total + (product.qty * product.object.pricewt) %}
+         {% set fullCartQuantity  = fullCartQuantity  + (product.qty ) %}
+    {% endfor %}
+    <p>Total Produit : <strong id="full-cart-quantity">{{ fullCartQuantity }}</strong></p>
+    <p>Prix total : <strong id="cart-total">{{ total|number_format(2, ',', ' ') }} €</strong></p>
+
+    <!-- Conteneur Flexbox pour les boutons -->
+    <div class="d-flex justify-content-between mt-3 gap-3">
+        <form action="{{ path('app_cart_remove') }}" method="post">
+            <button type="submit" class="btn btn-danger">Vider le panier</button>
+        </form>
+        <form action="#" method="post">
+            <button type="submit" class="btn btn-success">Commander</button>
+        </form>
+    </div>
+</div>
+            
+        </div>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    // Ajout des écouteurs d'événements pour les boutons d'augmentation et de diminution de quantité
+    document.querySelectorAll('.increase-quantity, .decrease-quantity').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du bouton
+
+            const productId = this.dataset.id;  // Récupérer l'ID du produit
+            const action = this.classList.contains('increase-quantity') ? 'increase' : 'decrease'; // Déterminer l'action (+ ou -)
+
+            console.log(`Bouton cliqué : Produit ID ${productId}, Action : ${action}`);
+
+            // Appeler la fonction AJAX pour mettre à jour la quantité
+            updateQuantity(productId, action);
+        });
+    });
+
+    // Fonction AJAX pour mettre à jour la quantité
+    function updateQuantity(productId, action) {
+        fetch(`/cart/${action}/${productId}`, {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Réponse du serveur :', data);
+
+            if (data.success) {
+                // Mettre à jour la quantité affichée pour ce produit
+                document.getElementById(`qty-${productId}`).textContent = data.qty;
+
+                // Mettre à jour le total du panier
+                document.getElementById('cart-total').textContent = `${data.total} €`;
+
+                // Mettre à jour la quantité totale d'articles dans le panier
+                document.getElementById('full-cart-quantity').textContent = data.fullCartQuantity;
+
+                // Mettre à jour l'icône du panier dans la barre de navigation
+                updateCartIcon(data.fullCartQuantity);
+
+                // Supprimer l'élément si la quantité atteint zéro
+                if (data.qty === 0) {
+                    document.getElementById(`product-${productId}`).remove();
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Erreur lors de la requête AJAX :', err);
+        });
+    }
+
+    // Fonction pour mettre à jour l'icône du panier
+  function updateCartIcon(fullCartQuantity) {
+        // Sélectionner l'élément de l'icône du panier par son ID
+        const cartIconQuantity = document.getElementById('cart-icon-quantity');
+        
+        // Mettre à jour le texte de la quantité dans l'icône du panier
+        if (cartIconQuantity) {
+            cartIconQuantity.textContent = fullCartQuantity;
+        }
+    }
+
+});
+
+</script>
+{% endblock %}

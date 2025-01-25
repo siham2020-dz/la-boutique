@@ -45,22 +45,27 @@
                     {% else %}
                     <a href="{{ path('app_login' )}}"><i data-feather="user"></i></a>
                     {% endif %}
-                    <a href=""><i data-feather="shopping-cart"></i></a>
+                    <a href="{{ path('app_cart') }}">
+                        <i data-feather="shopping-cart"></i>
+                        <span class="badge text-bg-light" id="cart-icon-quantity">{{ fullCartQuantity }}</span>
+                    </a>
+
+
                 </div>
             </div>
         </div>
     </nav>
 </header>
 <main>
-    <div class="container">
-        {% for label, messages in app.session.flashbag.peekAll() %}
-          {% for message in messages %}
-           <div class="alert mt-4 alert-{{ label }}">
-              {{ message }}
-           </div>
-         {% endfor %}
-       {% endfor %}
-    </div>
+<div class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="alert mt-4 alert-{{ label }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
+</div>
  {%block body %} {% endblock %}
 
   
@@ -71,5 +76,7 @@
 
 <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/js/global.js')}}"></script>
+{% block javascripts %}{% endblock %}
+
 </body>
 </html>
