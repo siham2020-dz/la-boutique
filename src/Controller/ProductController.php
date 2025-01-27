@@ -23,3 +23,16 @@ final class ProductController extends AbstractController
         ]);
     }
 }
+/* deuxième  methode en utulisant le maping entity 
+#[Route('/produit/{slug}', name: 'app_product')]
+    public function index(#[MapEntity(slug: 'slug')] Product $product):reponse
+            if(!$product){
+            return $this->redirectToRoute('app_home');
+            
+           }
+    
+        return $this->render('product/index.html.twig', [
+            'product' => $product,
+        ]);
+    }
+        */

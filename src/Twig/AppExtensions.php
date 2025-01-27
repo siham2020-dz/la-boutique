@@ -21,6 +21,7 @@ class AppExtensions extends AbstractExtension implements GlobalsInterface
   
   public function  getFilters()
   {
+    
          return [
             new TwigFilter('price',[$this,'formatPrice'])
          ];
