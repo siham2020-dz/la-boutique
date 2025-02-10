@@ -4,6 +4,7 @@ monolog:
 
 when@dev:
     monolog:
+        channels: ['custom']  # Declare the custom channel
         handlers:
             main:
                 type: stream
@@ -18,6 +19,12 @@ when@dev:
             #chromephp:
             #    type: chromephp
             #    level: info
+            # Custom log to custom.log, triggered based on context (for example)
+            custom_log:
+                type: stream
+                level: info
+                path: '%kernel.logs_dir%/custom.log'
+                channels: ['custom']
             console:
                 type: console
                 process_psr_3_messages: false

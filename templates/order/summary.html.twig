@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container my-5">
+
+		<h1>Récapitulatif de ma commande</h1>
+
+		<div class="row">
+
+			<div class="col-md-8">
+				
+				<div class="bg-light p-3">
+                <strong>Contenue de mon panier</strong><br/>
+					{% for product in cart %}
+						<div class="row mt-2" id="product-{{ product.object.id }}" data-id="{{ product.object.id }}">
+							<div class="col-md-2">
+								<img src="/uploads/{{ product.object.illustration }}" class="img-fluid" alt="{{ product.object.name }}">
+							</div>
+							<div class="col-md-4">
+								<strong>{{ product.object.name }}</strong>
+								<p>Prix unitaire :
+									{{ product.object.pricewt|number_format(2, ',', ' ') }}
+									€</p>
+							</div>
+							<div class="col-md-3">
+								<div class="d-flex align-items-center">
+
+									<span id="qty-{{ product.object.id }}" class="mx-2">{{ product.qty }}</span>
+
+								</div>
+							</div>
+							<div class="col-md-3">
+								<strong>{{ (product.qty * product.object.pricewt)|number_format(2, ',', ' ') }}
+									€</strong>
+							</div>
+						</div>
+						<hr>
+					{% endfor %}
+				</div>
+				<div class="bg-light p-3 my-3">
+					<strong>Votre address de livraison:</strong><br/>
+					{{ choices.adresses.firstname }}
+					{{ choices.adresses.Lastname }}<br/>
+					{{ choices.adresses.address}}<br/>
+					{{ choices.adresses.city}}
+					-{{ choices.adresses.country}}<br/>
+				</div>
+				<div class="bg-light p-3">
+					<strong>Votre transporteur</strong><br/>
+					{{ choices.carriers.name }}
+					{{ choices.carriers.description }}
+				</div>
+
+
+			</div>
+			<div class="col-md-4">
+				<div class="bg-light p-3">
+					{% set total = 0 %}
+					{%set fullCartQuantity =0 %}
+					{% for product in cart %}
+						{% set total = total + (product.qty * product.object.pricewt) %}
+						{% set fullCartQuantity  = fullCartQuantity  + (product.qty ) %}
+					{% endfor %}
+					<div class="d-flex justify-content-between">
+						<span class="fw-bold">Total de produit</span>
+						<span>{{ fullCartQuantity }}</span>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<span class="fw-bold">Total transporteur</span>
+						<span>{{ choices.carriers.price | price}}</span>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<span class="fw-bold">Totale commande</span>
+						<span>{{ (total+ choices.carriers.price ) | price}}</span>
+
+					</div>
+					<div>
+						<a href="{{ path('app_order') }}" class="btn btn-success w-100 mt-3">Payer</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}

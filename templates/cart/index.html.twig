@@ -43,13 +43,13 @@
     <p>Prix total : <strong id="cart-total">{{ total|number_format(2, ',', ' ') }} €</strong></p>
 
     <!-- Conteneur Flexbox pour les boutons -->
-    <div class="d-flex justify-content-between mt-3 gap-3">
-        <form action="{{ path('app_cart_remove') }}" method="post">
-            <button type="submit" class="btn btn-danger">Vider le panier</button>
-        </form>
-        <form action="#" method="post">
-            <button type="submit" class="btn btn-success">Commander</button>
-        </form>
+    <div class="d-flex justify-content-between mt-3">
+        <div >
+            <a  href="{{ path('app_cart_remove') }}"  class="btn btn-danger w-100 mt-3">Vider le panier</a>
+        </div>
+        <div >
+            <a href="{{ path('app_order') }}"  class="btn btn-success w-100 mt-3">Commander</a>
+        </div>
     </div>
 </div>
             

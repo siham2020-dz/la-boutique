@@ -42,26 +42,26 @@ final class CartController extends AbstractController
         $this->addFlash(
         'success',
         'Votre panier a été vidé.'
-    );
+        );
 
         return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/cart/update/{id}/{action}', name: 'app_cart_update', methods: ['POST'])]
     public function update($id, $action, Cart $cart): JsonResponse
-    
-        {
-            return $cart->updateQuantityAndReturnJson($id, $action);
-        }
-        #[Route('/cart/increase/{id}', name: 'app_cart_increase', methods: ['POST'])]
-public function increase($id, Cart $cart): JsonResponse
-{
-    return $cart->updateQuantityAndReturnJson($id, 'increase');
-}
+    {
+        return $cart->updateQuantityAndReturnJson($id, $action);
+    }
 
-#[Route('/cart/decrease/{id}', name: 'app_cart_decrease', methods: ['POST'])]
-public function decrease($id, Cart $cart): JsonResponse
-{
-    return $cart->updateQuantityAndReturnJson($id, 'decrease');
-}
+    #[Route('/cart/increase/{id}', name: 'app_cart_increase', methods: ['POST'])]
+    public function increase($id, Cart $cart): JsonResponse
+    {
+        return $cart->updateQuantityAndReturnJson($id, 'increase');
+    }
+
+    #[Route('/cart/decrease/{id}', name: 'app_cart_decrease', methods: ['POST'])]
+    public function decrease($id, Cart $cart): JsonResponse
+    {
+        return $cart->updateQuantityAndReturnJson($id, 'decrease');
+    }
 }

@@ -8,10 +8,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Cart
 {
+    private $logger;
+
     public function __construct(
         private RequestStack $requestStack,
-        private LoggerInterface $logger
-    ) {}
+        private LoggerInterface $customLogger
+    ) {
+        $this->logger = $customLogger;
+    }
 
     public function add($product)
     {
@@ -43,6 +47,7 @@ class Cart
             $cart[$productId]['qty']++;
             $this->requestStack->getSession()->set('cart', $cart);
             $this->logger->info("Quantité augmentée pour le produit ID {$productId}. Nouvelle quantité : {$cart[$productId]['qty']}");
+            // $this->logger->channel('custom')->info("Quantité augmentée pour le produit ID {$productId}. Nouvelle quantité : {$cart[$productId]['qty']}");
         } else {
             $this->logger->warning("Tentative d'augmentation de quantité pour un produit inexistant dans le panier : ID {$productId}");
         }
@@ -111,6 +116,7 @@ class Cart
             'success' => true,
             'qty' => isset($cartItems[$productId]) ? $cartItems[$productId]['qty'] : 0,
             'total' => number_format($total, 2, ',', ' '),
+
             'fullCartQuantity' => $fullCartQuantity // Ajouter la quantité totale d'articles
         ]);
     }

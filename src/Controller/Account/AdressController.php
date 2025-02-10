@@ -39,7 +39,7 @@ class AdressController extends AbstractController
             return $this->redirectToRoute('app_account_address');
     }
     #[Route('/compte/adresse/ajouter/{id}', name: 'app_account_address_form',defaults:['id'=>null] )]
-    public function Form(Request $request,$id,AdressRepository $adressRepository): Response
+    public function Form(Request $request,$id,AdressRepository $adressRepository,Cart $cart): Response
     {   
         if($id){
 
@@ -57,13 +57,17 @@ class AdressController extends AbstractController
         $form =$this->createForm(AddressUserType::class,$address);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-        $this->entityManager->persist($address);
-        $this->entityManager->flush();
-        $this->addFlash
-              ('success',
+            $this->entityManager->persist($address);
+            $this->entityManager->flush();
+            $this->addFlash
+                ('success',
                 "votre Adress est correctement  sauvegardée. "
-              );
-              return $this->redirectToRoute("app_account_address");
+                  );
+        if($cart->fullQantity() >0){
+            return $this->redirectToRoute('app_order');
+        }
+
+            return $this->redirectToRoute("app_account_address");
         }
         return $this->render('account/address/Form.html.twig',[
             'adressForm'=>$form,
