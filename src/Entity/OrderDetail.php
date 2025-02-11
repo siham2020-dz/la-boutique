@@ -83,6 +83,13 @@ class OrderDetail
 
         return $this;
     }
+    public function getProductPricewt()
+    {
+        $coeff = 1+($this->productTva/100);
+      
+        return $coeff * $this->productPrice;
+
+    }
 
     public function getProductPrice(): ?float
     {
