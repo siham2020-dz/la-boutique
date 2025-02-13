@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterUserType;
+use App\Classe\Mail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ class RegisterController extends AbstractController
            $user = new User();
        
            $form =$this->createForm(RegisterUserType::class,$user);
-           //si le formulaire esy soumis alors:
+           //si le formulaire est soumis alors:
            // tu enregistre les datas en bcaddtu envoies un message de confirmation du compte bien créé
            $form->handleRequest($request);
            if ($form->isSubmitted() && $form->isValid())
@@ -31,6 +32,14 @@ class RegisterController extends AbstractController
               ('success',
                 "votre compte est correctement  créé,veuiller vous connecter. "
               );
+              //envoi d'un email de confirmation d'inscription 
+              $mail= new Mail();
+              $vars =[
+                'firstname'=> $user->getFirstname()
+              ];
+      
+               $mail->send($user->getEmail(),$user->getFirstname().''.$user->getLastname(),'Bienvenue sur la Boutique Française ,','welcome.html',$vars);
+
               return $this->redirectToRoute('app_login');
            }
            //enregister dan la base de donnees
