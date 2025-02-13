@@ -14,7 +14,7 @@ class Mail
         //recuperation des variable facultatif 
         if($vars){
             foreach($vars as $key=>$var ){
-                str_replace('{'.$key.'}', '$var',$content);
+               $content=  str_replace('{'.$key.'}', $var,$content);
             }
         }
         $mj = new Client($_ENV['MJ_APIKEY_PUBLIC'], $_ENV['MJ_APIKEY_PRIVATE'], true, ['version' => 'v3.1']);

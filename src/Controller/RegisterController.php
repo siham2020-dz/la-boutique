@@ -28,11 +28,14 @@ class RegisterController extends AbstractController
             
              $entityManager->persist($user);
              $entityManager->flush();
+             
              $this->addFlash
               ('success',
                 "votre compte est correctement  créé,veuiller vous connecter. "
               );
               //envoi d'un email de confirmation d'inscription 
+             
+      
               $mail= new Mail();
               $vars =[
                 'firstname'=> $user->getFirstname()
