@@ -4,6 +4,7 @@ namespace App\Controller\Account;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Adress;
+use App\Classe\Cart;
 use App\Repository\AdressRepository;
 use App\Form\AddressUserType;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ class AdressController extends AbstractController
                 ('success',
                 "votre Adress est correctement  sauvegardée. "
                   );
-        if($cart->fullQantity() >0){
+        if($cart->fullquantity() >0){
             return $this->redirectToRoute('app_order');
         }
 

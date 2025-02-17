@@ -23,6 +23,8 @@ final class PaymentController extends AbstractController
             'id'=>$id_order,
             'user'=>$this->getUser()
         ]);
+          // Vérifie si la commande est récupérée
+         // Arrête le script et affiche le contenu de $order
         if(!$order){
             return $this->redirectToRoute('app_home');
 
@@ -96,9 +98,7 @@ $entityManager->flush();
         }
       
         return $this->render('payment/success.html.twig', [
-            
-            'order'=>$order,
-            
+            'order' => $order, // On passe bien la commande au template
         ]);
 
     }

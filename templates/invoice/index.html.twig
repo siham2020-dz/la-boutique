@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Demo</title>
+    
+    <!-- Ajout de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .text-center {
+            text-align: center;
+        }
+         .text-right{
+            text-align: right;
+        }
+        .text-left{
+            text-align: left;
+        }
+        .body{
+            font-family:Roboto,sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table td{
+            padding: 0.5rem;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+   
+     <div class="text-center">
+    <img src="data:image/jpeg;base64,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">
+
+   
+    <h3>Facture commande  n°{{ order.id }}<</h3>
+        <table style="width: 100%; border-bottom: 1px solid gray;">
+            <tr>
+            <td style="width: 49%">
+                <strong> La Boutique Française</strong><br/>
+                  mon adresse.<br/>
+                 code postal.ville.france.<br/>
+                 email@laboutiquefrançaise@gmail.com
+                 0302050104
+            </td>
+              <td class="text-right">
+                {{ order.delivery|raw }}
+              
+              </td>      
+        
+        </tr>
+        
+        </table>>
+    </div>
+<h5>Le Contenue de ma Commande</h5>
+<table style="width:100%;">
+  <thead>
+    <tr>
+     
+    
+      <th scope="col" style="text-left">Produit</th>
+      <th scope="col" style="text-left">Quantité</th>
+      <th scope="col" style="text-left">Prix unitaire H.</th>
+      <th scope="col" style="text-left">TVA</th>
+      <th scope="col" class="text-right">Total T.T.C </th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in order.orderDetails%}
+
+<tr>
+
+    
+     <td>{{ product.ProductName}}</td>
+    <td>{{ product.productQuantity}}</td>
+    <td>{{ product.productPrice|price}}</td>
+    <td>{{ product.productTva}}%</td>
+    {% set coeff= 1+(product.productTva /100) %}
+    <td class="text-right">{{(product.productQuantity*(product.productPrice*coeff))|price}}</td>
+     
+
+    </tr>
+{% endfor %}
+    
+  <tr>
+ 
+   <td>{{ order.carrierName}}</td>
+   <td>1</td>
+   <td></td>
+   <td></td>
+   <td>{{order.carrierPrice |price}}</td>
+  </tr>
+  </tbody>
+</table>
+<div  class="text-right" style="margin_top:10px;">
+<strong>Totale H.C :</strong>{{ (order.totalWt - order.totaltva)|price }}<br/>
+<strong>Totale TVA :</strong>{{ order.totaltva|price }}<br/>
+<strong>Totale T.T.C :</strong>{{ order.totalWt|price }}
+
+</div>
+</body>
+</html>

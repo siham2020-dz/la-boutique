@@ -19,6 +19,13 @@ class Order
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+    /*
+    * 1. En attente de paiment
+    * 2. paiment validé
+    * 3. En courd de préparation
+    * 4. Expédier
+    * 5. Annulé
+    */
 
     #[ORM\Column]
     private ?int $state = null;

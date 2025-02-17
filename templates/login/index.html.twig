@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+
 
 {% block body %}
 
@@ -25,6 +25,7 @@
         <button type="submit" class="btn btn-success mt-3" >Me Connecter</button>
     </form>
     <br/>
-    Vous n'avez pas de compte ?<a href="{{ path('app_register') }}">Inscrivez_Vous</a>
+    Vous n'avez pas de compte ?<a href="{{ path('app_register') }}">Inscrivez_Vous</a><br/>
+ <a href="{{ path('app_password') }}">Mot de passe Oublier ?</a>
 </div>
 {% endblock %}

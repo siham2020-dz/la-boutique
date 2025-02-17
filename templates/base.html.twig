@@ -6,8 +6,8 @@
     <title>La Boutique Française - 100% Made in France</title>
     <meta name="description" content="La boutique spécialisée dans la fabrication Made In France">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
-
+ <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -42,9 +42,11 @@
                 <div class="speed-menu">
                     {%if app.user %}
                     <a href="{{ path('app_account') }}"><i data-feather="user"></i>{{app.user.firstname}}</a>
+                     <a href="{{ path('app_account_wishlist') }}" > <i data-feather="heart"></i></a> 
                     {% else %}
                     <a href="{{ path('app_login' )}}"><i data-feather="user"></i></a>
                     {% endif %}
+                    
                     <a href="{{ path('app_cart') }}">
                         <i data-feather="shopping-cart"></i>
                         <span class="badge text-bg-light" id="cart-icon-quantity">{{ fullCartQuantity }}</span>
